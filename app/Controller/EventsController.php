@@ -25,9 +25,9 @@ class EventsController extends AppController
   }
 
   //イベントの編集
-  public function edit($id = null){
+  public function edit($id = null){ //$idがなかったらnull入れるよ
     if(!$id){
-      throw new NotFoundException(__('Invalidだよ'));
+      throw new NotFoundException(__('Invalidだよ')); //__は多言語化するときに便利
     }
     $event = $this->Event->findById($id);
     if(!$event){
@@ -37,7 +37,7 @@ class EventsController extends AppController
       $this->Event->id=$id;
       if($this->Event->save($this->request->data)){
         $this->Session->setFlash(__('更新したよ'));
-        return $this->redirect(array('action'=>'index'));
+        return $this->redirect(array('action'=>'index')); //=>は配列の時しか使わない　actionというkeyに'index'を代入する
       }
       $this->Session->setFlash(__('ダメでした'));
     }
@@ -48,14 +48,39 @@ class EventsController extends AppController
 
   //イベントの削除
   public function delete($id = null){
-    if ($this->request->is('get')){
-      throw new MethodNotAllowedException();
-    }
+    //if ($this->request->is('get')){
+    //  throw new MethodNotAllowedException();
+    //}
     if ($this->Event->delete($id)){
       $this->Session->setFlash(__('%s消したよ',h($id)));
       return $this->redirect(array('action'=>'index'));
     }
+  }
+
+  //イベントの詳細
+  public function detail($id = null){
+    if(!$id){
+      throw new NotFoundException(__('Invalidだよ')); //__は多言語化するときに便利
+    }
+    $event = $this->Event->findById($id);
+    if(!$event){
+      throw new NotFoundException(__('Invalidだよ'));
+    }
+    $this->set('event',$event);
 
   }
+
+  //イベントの検索
+  public function search($name = null){
+    if(!$name){
+      throw new NotFoundException(__('イベント名は必ずいれてね'));
+    }
+    $name = $this->request->data['Event']['name'];
+    $data = $this->Event->find('all',
+    array('conditions' => array('name like' => '%'.$name.'%')));
+    $this->set('datas',$data);
+
+  }
+
 
 }

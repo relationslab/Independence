@@ -1,25 +1,40 @@
-<?php echo $events[0]['Event']['name']; ?>
-<br>
-<?php echo $events[1]['Event']['name']; ?>
+イベントを新規登録する
 <br>
 <?php echo $this->Html->link(
   'Add Event',
   array('controller'=>'events','action'=>'add')
 );
 ?>
-<br><br>
-<?php echo $events[0]['Event']['name']; ?>
-を編集する
-<?php echo $this->Html->link(
-  'Edit',
-  array('action' => 'edit', $events[0]['Event']['id'])
-);
-?>
 
 <br><br>
-<?php echo $events[1]['Event']['name']; ?>を削除する
-<?php echo $this->Html->Link(
-'Delete',
-array('action'=>'delete', $events[1]['Event']['id']),
-array('confirm'=>'Are you sure??'));
-?>
+<ul>
+<?php foreach ($events as $event): ?>
+<li>
+
+<?php echo $this->Html->link($event['Event']['name'],array('action' => 'detail', $event['Event']['id']));?>
+
+<a href="<?php echo $this->Html->url(array('action' => 'detail', $event['Event']['id']));?>">
+  <?php echo $event['Event']['name'];?>
+  <!-- <img src="">とかを追加できる。全体にリンクをかけれる-->
+</a>
+
+<a href="<?php echo $this->Html->url(
+array('action' => 'edit', $event['Event']['id']));?>">
+Edit
+</a>
+
+<a href="<?php echo $this->Html->url(
+array('action'=>'delete', $event['Event']['id']),
+array('confirm'=>'Are you sure??'));?>">
+Delete
+</a>
+
+</li>
+<?php endforeach; ?>
+
+イベントを検索するよ！
+<br>
+<?php echo $this->Form->create('Event',array('type'=>'
+Post')); ?>
+<?php echo $this->Form->input('Event.name',array('label'=>'イベント名')); ?>
+<?php echo $this->Form->end('検索'); ?>
