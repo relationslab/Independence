@@ -7,8 +7,35 @@ class EventsController extends AppController
   //Eventの一覧ページをつくる
   public function index()
     {
+      $place = $this->request->query['place'];
+      $instructor = $this->request->query['instructor'];
+      if(!$instructor && !$place){
         $events = $this->Event->find('all');  //Eventモデルを使って全部のEventを取ってくる
-        $this->set('events', $events);  //取ってきたイベントをViewに渡す
+      }else{
+        if($place){
+          $conditions['place like'] = '%'.$place.'%';
+        }
+        if($instructor){
+          $conditions['instructor like'] = '%'.$instructor.'%';
+        }
+        $events = $this->Event->find('all',array('conditions' => $conditions));
+      }
+      $this->set('events', $events);  //取ってきたイベントをViewに渡す
+
+
+/*        //イベントの検索
+        public function search($name = null){
+          if(!$name){
+            throw new NotFoundException(__('イベント名は必ずいれてね'));
+          }
+          $name = $this->request->data['Event']['name'];
+          $data = $this->Event->find('all',
+          array('conditions' => array('name like' => '%'.$name.'%')));
+          $this->set('datas',$data);
+
+        }
+
+*/
     }
 
   //イベントの追加
@@ -67,18 +94,6 @@ class EventsController extends AppController
       throw new NotFoundException(__('Invalidだよ'));
     }
     $this->set('event',$event);
-
-  }
-
-  //イベントの検索
-  public function search($name = null){
-    if(!$name){
-      throw new NotFoundException(__('イベント名は必ずいれてね'));
-    }
-    $name = $this->request->data['Event']['name'];
-    $data = $this->Event->find('all',
-    array('conditions' => array('name like' => '%'.$name.'%')));
-    $this->set('datas',$data);
 
   }
 

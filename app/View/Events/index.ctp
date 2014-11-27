@@ -31,10 +31,11 @@ Delete
 
 </li>
 <?php endforeach; ?>
+<br>
 
 イベントを検索するよ！
 <br>
-<?php echo $this->Form->create('Event',array('type'=>'
-Post')); ?>
-<?php echo $this->Form->input('Event.name',array('label'=>'イベント名')); ?>
+<?php echo $this->Form->create('Event',array('type'=>'Get')); ?> 
+<?php echo $this->Form->input('Event.instructor',array('label'=>'講師')); ?>
+<?php echo $this->Form->input('Event.place',array('label'=>'場所')); ?>
 <?php echo $this->Form->end('検索'); ?>
