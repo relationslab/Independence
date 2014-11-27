@@ -7,8 +7,25 @@ class EventsController extends AppController
   //Eventの一覧ページをつくる
   public function index()
     {
+      debug($this->request->query['place']);
+      if($this->request->query['place']){
+        $conditions['place like'] = '%'.$this->request->query['place'].'%';
+      }else{
+        $place = null;
+      }
+      if($this->request->query['instructor']){
+        $conditions['instructor like'] = '%'.$this->request->query['instructor'].'%';
+      }else{
+        $instructor = null;
+      }
+      $events = $this->Event->find('all',array('conditions' => $conditions));
+      $this->set('events', $events);
+
+
+      /*
       $place = $this->request->query['place'];
       $instructor = $this->request->query['instructor'];
+
       if(!$instructor && !$place){
         $events = $this->Event->find('all');  //Eventモデルを使って全部のEventを取ってくる
       }else{
@@ -23,7 +40,7 @@ class EventsController extends AppController
       $this->set('events', $events);  //取ってきたイベントをViewに渡す
 
 
-/*        //イベントの検索
+        //イベントの検索
         public function search($name = null){
           if(!$name){
             throw new NotFoundException(__('イベント名は必ずいれてね'));
