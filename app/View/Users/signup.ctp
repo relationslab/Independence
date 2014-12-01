@@ -4,7 +4,7 @@
 echo $this->Form->create('User');
 echo $this->Form->input('name');
 echo $this->Form->input('mail');
-echo $this->Form->input('pass');
+echo $this->Form->input('new_pass');
 echo $this->Form->input('passconf');
 echo $this->Form->end('登録');
 ?>
