@@ -2,8 +2,8 @@
 class EventsController extends AppController
 {
   //EventというModelを使うよ
-  public $uses = array('Event');
-  public $components = array('Session');
+  public $uses = array('Event' , 'History');
+  public $components = array('Session', 'Auth');
   //Eventの一覧ページをつくる
   public function index()
     {
@@ -74,8 +74,15 @@ class EventsController extends AppController
       throw new NotFoundException(__('Invalidだよ'));
     }
     $this->set('event',$event);
-
   }
 
+  //イベント申込
+  public function apply(){
+    debug($this->request->data);
+    $this->request->data['History']['user_id'] = $this->Auth->user('id');
+    debug($this->request->data);
+    $this->History->save($this->request->data);
+
+  }
 
 }

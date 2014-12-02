@@ -6,8 +6,6 @@ public $uses = array('User');
 //Sessionコンポーネントを使うよ
 public $components = array(
   'Session',
-
-
   'Auth' => array( //ログイン機能を利用する
     'authenticate' => array(
       'Form' => array(
@@ -42,9 +40,11 @@ public function beforeFilter(){
 public function login(){
   if($this->request->is('post')){
     if($this->Auth->login()){ //ログイン成功なら
-      return $this->redirect($this->Auth->redirect());  //Auth指定のページに遷移
+      return $this->redirect($this->Auth->redirectUrl());  //Auth指定のページに遷移
+      debug('ccc');
     }else{
       $this->Session->setFlash(__('ログインに失敗したよ。ユーザー名かPWを確認してね'));
+      debug('ddd');
     }
   }
 }
@@ -66,6 +66,8 @@ public function signup(){
         $this->Session->setFlash(__('新規登録しました'));
         return $this->redirect(array('action'=>'index'));
       }
+      $this->request->data['User']['pass'] = '';
+      $this->request->data['User']['passconf'] = '';
       $this->Session->setFlash(__('失敗しました'));
     }else{
       $this->request->data['User']['passconf'] = '';

@@ -1,5 +1,4 @@
 <h1>新規登録画面</h1>
-
 <?php
 echo $this->Form->create('User');
 echo $this->Form->input('name');
