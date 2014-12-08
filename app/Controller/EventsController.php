@@ -3,9 +3,15 @@ class EventsController extends AppController
 {
   //EventというModelを使うよ
   public $uses = array('Event' , 'History');
-  public $components = array('Session', 'Auth');
+
+
+  public function beforeFilter(){
+    $this->Auth->allow('index','detail'); //ログインせずにアクセスできるアクションを登録
+  }
+
   //Eventの一覧ページをつくる
   public function index()
+
     {
       $conditions = array();
       if(array_key_exists('place',$this->request->query) && isset($this->request->query['place'])){
@@ -79,10 +85,19 @@ class EventsController extends AppController
   //イベント申込
   public function apply(){
     debug($this->request->data);
-    $this->request->data['History']['user_id'] = $this->Auth->user('id');
-    debug($this->request->data);
-    $this->History->save($this->request->data);
-
+    $result =  $this->History->apply($this->Auth->user('id') , $this->request->data['History']['event_id']);
+    debug($result);
+    if(!$result){
+      $this->Session->setFlash(__('既に申し込み済だよ'));
+    }else{
+      $this->Session->setFlash(__('申し込んだよ!!!!'));
+    }
   }
+
+  //この場所でいいのか？？
+  public function logout(){
+    $this->redirect($this->Auth->logout());
+  }
+
 
 }

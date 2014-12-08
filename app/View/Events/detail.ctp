@@ -8,4 +8,5 @@
 
 <?php echo $this->Form->create('History' , array('url' => 'apply')) ?>
 <?php echo $this->Form->hidden('History.event_id', array('value'=>$event['Event']['id'])) ?>
+ <!-- 'History' => array(  'event_id' => '4'  ) としてデータが渡る-->
 <?php echo $this->Form->end('申込'); ?>

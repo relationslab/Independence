@@ -31,4 +31,35 @@ App::uses('Controller', 'Controller');
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
+
+  //Sessionコンポーネントを使うよ
+  public $components = array(
+    'Session',
+    'Auth' => array( //ログイン機能を利用する
+      'authenticate' => array(
+        'Form' => array(
+          'userModel' => 'User',
+          'fields' => array('username' => 'mail','password' => 'pass')
+        )
+      ),
+      //ログイン後の移動先
+      'loginRedirect' => array('controller' => 'events', 'action' => 'index'),
+      //ログアウト後の移動先
+      //    'logoutRedirect' => array('controller' => 'new_boards', 'action' => 'login'),
+      //ログインページのパス
+      'loginAction' => array('controller' => 'users', 'action' => 'index'),
+      //未ログイン時のメッセージ
+      'authError' => 'あなたのお名前とパスワードを入力して下さい。',
+    )
+
+
+  );
+
+  public function beforeFilter(){
+    $this->set('users',$this->Auth->user()); //ctpで$userを使えるように。ユーザー情報を渡してあげる。
+  }
+
+
+
+
 }

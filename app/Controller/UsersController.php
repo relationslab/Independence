@@ -3,28 +3,7 @@ class UsersController extends AppController{
 
 //User Modelを使うよ
 public $uses = array('User');
-//Sessionコンポーネントを使うよ
-public $components = array(
-  'Session',
-  'Auth' => array( //ログイン機能を利用する
-    'authenticate' => array(
-      'Form' => array(
-        'userModel' => 'User',
-        'fields' => array('username' => 'mail','password' => 'pass')
-      )
-    ),
-    //ログイン後の移動先
-    'loginRedirect' => array('controller' => 'events', 'action' => 'index'),
-    //ログアウト後の移動先
-//    'logoutRedirect' => array('controller' => 'new_boards', 'action' => 'login'),
-    //ログインページのパス
-    'loginAction' => array('controller' => 'users', 'action' => 'index'),
-    //未ログイン時のメッセージ
-    'authError' => 'あなたのお名前とパスワードを入力して下さい。',
-  )
 
-
-  );
 
 //Userページを作るよ
 public function index(){
@@ -47,8 +26,6 @@ public function login(){
       debug('ddd');
     }
   }
-}
-public function logout(){
 }
 
 
