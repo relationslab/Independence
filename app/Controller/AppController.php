@@ -56,7 +56,7 @@ class AppController extends Controller {
   );
 
   public function beforeFilter(){
-    $this->set('users',$this->Auth->user()); //ctpで$userを使えるように。ユーザー情報を渡してあげる。
+  //  $this->set('users',$this->Auth->user()); //ctpで$userを使えるように。ユーザー情報を渡してあげる。けどうまくいかない。
   }
 
 

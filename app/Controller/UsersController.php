@@ -13,7 +13,7 @@ public function index(){
 
 public function beforeFilter(){
   $this->Auth->allow('index','signup','login','logout'); //ログインせずにアクセスできるアクションを登録
-  $this->set('user',$this->Auth->user()); //ctpで$userを使えるようにする・・・？？
+  $this->set('users',$this->Auth->user()); //ctpで$userを使えるように。ユーザー情報を渡してあげる。
 }
 
 public function login(){
@@ -27,6 +27,12 @@ public function login(){
     }
   }
 }
+
+//ログアウト
+public function logout(){
+  $this->redirect($this->Auth->logout());
+}
+
 
 
 //新規登録

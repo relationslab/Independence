@@ -1,10 +1,3 @@
-<h1>ユーザー情報</h1>
-<?php echo $this->Session->flash('Auth');?>
-<?php echo $this->Form->create('User',array('url' => 'logout')); ?>
-<?php echo $this->Form->end('ログアウト'); ?>
-
-<hr />
-
 イベントを新規登録する
 <br>
 <?php echo $this->Html->link(
@@ -46,3 +39,4 @@ Delete
 <?php echo $this->Form->input('Event.instructor',array('label'=>'講師')); ?>
 <?php echo $this->Form->input('Event.place',array('label'=>'場所')); ?>
 <?php echo $this->Form->end('検索'); ?>
+<?php debug($users); ?>

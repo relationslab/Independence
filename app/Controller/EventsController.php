@@ -7,6 +7,7 @@ class EventsController extends AppController
 
   public function beforeFilter(){
     $this->Auth->allow('index','detail'); //ログインせずにアクセスできるアクションを登録
+    $this->set('users',$this->Auth->user()); //ctpで$userを使えるように。ユーザー情報を渡してあげる。
   }
 
   //Eventの一覧ページをつくる
@@ -83,21 +84,12 @@ class EventsController extends AppController
   }
 
   //イベント申込
-  public function apply(){
-    debug($this->request->data);
-    $result =  $this->History->apply($this->Auth->user('id') , $this->request->data['History']['event_id']);
+  public function apply($id = null){
+    $result =  $this->History->apply($this->Auth->user('id') , $id);
     debug($result);
-    if(!$result){
-      $this->Session->setFlash(__('既に申し込み済だよ'));
-    }else{
-      $this->Session->setFlash(__('申し込んだよ!!!!'));
-    }
+    $this->Session->setFlash(__($result));
   }
 
-  //この場所でいいのか？？
-  public function logout(){
-    $this->redirect($this->Auth->logout());
-  }
 
 
 }
