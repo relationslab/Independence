@@ -19,11 +19,21 @@ class History extends AppModel
     $Event = new Event;
     if(!$Event->find('count', array('conditions' => array('Event.id' => $event_id)))){
       return '存在しないイベントだよ';
-    }    
+    }
     if(!$this->save(array('user_id' => $user_id , 'event_id' => $event_id))){
       return '失敗しました。なぜか。';
     }
     return '申込完了';
   }
+
+
+/*  //申込済のセミナーを取得する
+  public function history($user_id){
+    public $my_history = 'History';
+    public $belongsTo = array(
+      'Event' => array('className' => 'Event' , 'foreignKey' => 'event_id')
+    )
+  }
+*/
 
 }
