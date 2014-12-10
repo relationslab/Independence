@@ -11,9 +11,7 @@ class EventsController extends AppController
   }
 
   //Eventの一覧ページをつくる
-  public function index()
-
-    {
+  public function index(){
       $conditions = array();
       if(array_key_exists('place',$this->request->query) && isset($this->request->query['place'])){
         $conditions['place like'] = '%'.$this->request->query['place'].'%';
@@ -21,8 +19,11 @@ class EventsController extends AppController
       if(array_key_exists('instructor',$this->request->query) && isset($this->request->query['instructor'])){
         $conditions['instructor like'] = '%'.$this->request->query['instructor'].'%';
       }
+      //hasManyで他のモデルのデータも取ってくるのを解除
+      $this->Event->recursive = -1;
       $events = $this->Event->find('all',array('conditions' => $conditions));
       $this->set('events', $events);
+      debug($events);
     }
 
   //イベントの追加

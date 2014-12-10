@@ -11,7 +11,8 @@ class HistoriesController extends AppController{
   public function index(){
     $conditions['user_id'] = $this->Auth->user('id');
     $my_events = $this->History->find('all' , array('conditions' => $conditions)) ;
-    $this->set('my_events' , $my_events); //Viewから参照できるようにsetが必要ということ？？無いとダメなのかしら。    
+    $this->set('my_events' , $my_events); //Viewから参照できるようにsetが必要ということ？？無いとダメなのかしら。
+    debug($my_events);
   }
 }
 

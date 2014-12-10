@@ -2,6 +2,11 @@
 App::uses('AppModel','Model');
 class User extends AppModel{
 
+  //他のモデルとの関係
+  public $hasMany = array(
+    'History' => array('className' => 'History' , 'foreignKey' => 'user_id')
+  );
+
 
   public $validate = array(
     'name' => 'notEmpty',

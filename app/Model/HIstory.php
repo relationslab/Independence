@@ -26,14 +26,9 @@ class History extends AppModel
     return '申込完了';
   }
 
-
-/*  //申込済のセミナーを取得する
-  public function history($user_id){
-    public $my_history = 'History';
-    public $belongsTo = array(
-      'Event' => array('className' => 'Event' , 'foreignKey' => 'event_id')
-    )
-  }
-*/
-
+//他のモデルとの関係を設定する
+  public $belongsTo = array(
+    'Event' => array('className' => 'Event' , 'foreignKey' => 'event_id'),
+    'User' => array('className' => 'User' , 'foreignKey' => 'user_id')
+  );
 }
