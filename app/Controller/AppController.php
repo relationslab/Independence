@@ -51,9 +51,10 @@ class AppController extends Controller {
       //未ログイン時のメッセージ
       'authError' => 'あなたのお名前とパスワードを入力して下さい。',
     )
-
-
   );
+
+  //このレイアウトを使うよ
+  public $layout = 'original';
 
   public function beforeFilter(){
   //$this->set('users',$this->Auth->user()); //ctpで$userを使えるように。ユーザー情報を渡してあげる。けどうまくいかない。
